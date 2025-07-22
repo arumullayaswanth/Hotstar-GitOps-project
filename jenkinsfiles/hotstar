@@ -15,11 +15,9 @@ pipeline {
         stage("Docker Image Build") {
             steps {
                 script {
-                    dir('src') {
-                        sh 'docker system prune -f'
-                        sh 'docker container prune -f'
-                        sh 'docker build -t hotstar .'
-                    }
+                     sh 'docker system prune -f'
+                     sh 'docker container prune -f'
+                     sh 'docker build -t hotstar .'
                 }
             }
         }
