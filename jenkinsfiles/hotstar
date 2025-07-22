@@ -49,7 +49,7 @@ pipeline {
                 GIT_USER_NAME = "arumullayaswanth"
                 IMAGE_NAME = "hotstar"
                 REPO_URL = "421954350274.dkr.ecr.us-east-1.amazonaws.com/hotstar"
-                YAML_FILE = "hotstar.yaml"
+                YAML_FILE = "deployment.yml"
             }
             steps {
                 dir('kubernetes-files') {
