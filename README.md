@@ -330,7 +330,7 @@ This guide shows how to verify if your ECR repositories exist using the AWS Cons
  - Pipeline:
    - Definition : `Pipeline script from SCM`
    - SCM : `Git`
-   - Repositories : `https://github.com/arumullayaswanth/Microservices-E-Commerce-eks-project.git`
+   - Repositories : `https://github.com/arumullayaswanth/Hotstar-GitOps-project.git`
    - Branches to build : `*/master`
    - Script Path : `jenkinsfiles/hotstar`
    - Apply
@@ -464,7 +464,7 @@ kubectl get namespaces
    - **Application Name:** `project`
    - **Project Name:** `default`
    - **Sync Policy:** `Automatic`
-   - **Repository URL:** `https://github.com/arumullayaswanth/Microservices-E-Commerce-eks-project.git`
+   - **Repository URL:** `https://github.com/arumullayaswanth/Hotstar-GitOps-project.git`
    - **Revision:** `HEAD`
    - **Path:** `kubernetes-files`
    - **Cluster URL:** `https://kubernetes.default.svc`
