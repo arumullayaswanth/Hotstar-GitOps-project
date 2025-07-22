@@ -3,6 +3,7 @@ resource "aws_instance" "web" {
   instance_type          = "t2.large"
   key_name               = "vscode"              #change key name as per your setup
   vpc_security_group_ids = [aws_security_group.devops-project-veera.id]
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   user_data              = templatefile("./install.sh", {})
 
   tags = {
