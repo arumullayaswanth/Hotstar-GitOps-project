@@ -17,11 +17,14 @@ pipeline {
         stage("Docker Image Build") {
             steps {
                 script {
-                  dir('.') {
-                    sh 'docker system prune -f'
-                    sh 'docker container prune -f'
-                    sh 'docker build -t hotstar .'
-                   }
+                    echo "📁 Showing workspace files:"
+                    sh 'pwd && ls -al'
+
+                    echo "🐳 Building Docker image from project root..."
+                    dir('') { // Root directory where Dockerfile is located
+                        sh 'docker system prune -f -a --volumes'
+                        sh 'docker build -t hotstar .'
+                    }
                 }
             }
         }
@@ -30,9 +33,13 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    echo "🔐 Logging into ECR..."
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 421954350274.dkr.ecr.us-east-1.amazonaws.com
 
+                    echo "🏷️ Tagging image..."
                     docker tag hotstar:latest 421954350274.dkr.ecr.us-east-1.amazonaws.com/hotstar:${BUILD_NUMBER}
+
+                    echo "📤 Pushing image to ECR..."
                     docker push 421954350274.dkr.ecr.us-east-1.amazonaws.com/hotstar:${BUILD_NUMBER}
                     '''
                 }
@@ -53,14 +60,16 @@ pipeline {
                 dir('kubernetes-files') {
                     withCredentials([string(credentialsId: 'my-git-pattoken', variable: 'git_token')]) {
                         sh '''
-                            git config user.email "${GIT_EMAIL}"
-                            git config user.name "${GIT_USER_NAME}"
-                            echo "BUILD_NUMBER=${BUILD_NUMBER}"
+                        echo "🛠️ Updating deployment file with new image tag..."
 
-                            sed -i "s#image:.*#image: ${REPO_URL}:$BUILD_NUMBER#g" ${YAML_FILE}
-                            git add .
-                            git commit -m "Update ${IMAGE_NAME} Image to version ${BUILD_NUMBER}" || echo "No changes to commit"
-                            git push https://${git_token}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
+                        git config user.email "${GIT_EMAIL}"
+                        git config user.name "${GIT_USER_NAME}"
+
+                        sed -i "s#image:.*#image: ${REPO_URL}:${BUILD_NUMBER}#g" ${YAML_FILE}
+
+                        git add .
+                        git commit -m "Update ${IMAGE_NAME} Image to version ${BUILD_NUMBER}" || echo "No changes to commit"
+                        git push https://${git_token}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                         '''
                     }
                 }
