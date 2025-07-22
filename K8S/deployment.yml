@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotstar-deployment
+spec:
+  replicas: 2 # Number of desired replicas
+  selector:
+    matchLabels:
+      app: hotstar
+  template:
+    metadata:
+      labels:
+        app: hotstar
+    spec:
+      containers:
+      - name: hotstar
+        image: 655668017312.dkr.ecr.ap-south-1.amazonaws.com/demo:29
+        ports:
+        - containerPort: 3000  # Port your application listens on
