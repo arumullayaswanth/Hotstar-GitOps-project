@@ -17,13 +17,11 @@ pipeline {
         stage("Docker Image Build") {
             steps {
                 script {
-                    // Show current directory contents for debug
-                    sh 'echo "Current directory contents:" && ls -al'
-                    
-                    // Make sure Dockerfile is found here
+                  dir('.') {
                     sh 'docker system prune -f'
                     sh 'docker container prune -f'
                     sh 'docker build -t hotstar .'
+                   }
                 }
             }
         }
