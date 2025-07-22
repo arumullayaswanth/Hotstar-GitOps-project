@@ -259,7 +259,7 @@ kubectl get nodes
  - Pipeline:
    - Definition : `Pipeline script from SCM`
    - SCM : `Git`
-   - Repositories : `https://github.com/arumullayaswanth/Microservices-E-Commerce-eks-project.git`
+   - Repositories : `https://github.com/arumullayaswanth/Hotstar-GitOps-project.git`
    - Branches to build : `*/master`
    - Script Path : `ecr-terraform/ecr-jenkinfile`
    - Apply
