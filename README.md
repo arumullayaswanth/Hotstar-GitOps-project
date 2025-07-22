@@ -1,3 +1,4 @@
+# DevSecOps CI/CD : Deploying a Secure Hotstar Clone (Even if You’re Not a Pro)
 # DevSecOps With Docker Scout Hotstar Clone
 
 #BLOG
