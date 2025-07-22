@@ -13,21 +13,20 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/arumullayaswanth/Microservices-E-Commerce-eks-project.git'
             }
         }
-
         stage("Docker Image Build") {
             steps {
                 script {
-                    echo "📁 Showing workspace files:"
-                    sh 'pwd && ls -al'
-
-                    echo "🐳 Building Docker image from project root..."
-                    dir('') { // Root directory where Dockerfile is located
-                        sh 'docker system prune -f -a --volumes'
+                    dir('../') {  // Go up one level from jenkinsfiles/
+                        echo "🔍 Confirming Dockerfile exists:"
+                        sh 'pwd && ls -l Dockerfile'
+        
+                        echo "🐳 Building Docker image from root"
+                        sh 'docker system prune -f'
                         sh 'docker build -t hotstar .'
                     }
                 }
             }
-        }
+        }    
 
         stage("ECR Image Pushing") {
             steps {
