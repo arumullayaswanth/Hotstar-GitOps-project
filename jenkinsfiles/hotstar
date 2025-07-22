@@ -12,6 +12,11 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/arumullayaswanth/Hotstar-GitOps-project.git'
             }
         }
+        stage("List Files") {
+            steps {
+                sh 'ls -la'
+            }
+        }
         stage("Docker Image Build") {
             steps {
                 script {
